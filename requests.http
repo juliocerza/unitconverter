@@ -1,0 +1,9 @@
+###
+POST "http://localhost:3333/converter/comprimento"
+Content-Type: application/json
+
+{
+    "value": 10,
+    "fromUnit": "meter",
+    "toUnit": "kilometer"
+}
