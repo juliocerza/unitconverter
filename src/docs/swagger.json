@@ -1,0 +1,100 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Conversor de unidades",
+    "version": "3.0.0"
+  },
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "description": "Root response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Bem vindo ao sistema de conversão de unidades"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Root"]
+      }
+    },
+    "/converter/unidade": {
+      "post": {
+        "summary": "Converte unidades",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Informações para a conversão",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "Valor a ser convertido"
+                },
+                "fromUnit": {
+                  "type": "string",
+                  "description": "Unidade de origem"
+                },
+                "toUnit": {
+                  "type": "string",
+                  "description": "Unidade de destino"
+                }
+              },
+              "required": ["value", "fromUnit", "toUnit"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conversão realizada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "convertedValue": {
+                  "type": "number",
+                  "description": "Valor a ser convertido"
+                },
+                "unit": {
+                  "type": "string",
+                  "description": "Unidade convertida"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação. Os parâmetros fornecidos estão incorretos ou ausentes.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Valor inválido: o valor deve ser um número real positivo."
+                },
+                "code": {
+                  "type": "integer",
+                  "example": "400"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["units"]
+      }
+    }
+  }
+}

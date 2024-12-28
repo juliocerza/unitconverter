@@ -6,7 +6,7 @@ const validateConversionParams = require("../middlewares/converterMiddleware");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send("Hello");
+  res.send("Sistema de Conversão de Unidades Físicas");
 });
 
 router.post(
