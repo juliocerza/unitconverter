@@ -9,6 +9,10 @@ router.get("/", (req, res) => {
   res.send("Hello");
 });
 
-router.post("/converter/comprimento", converterController.handle);
+router.post(
+  "/converter/unidade",
+  validateConversionParams,
+  converterController.handle
+);
 
 module.exports = router;

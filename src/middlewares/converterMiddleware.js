@@ -1,18 +1,20 @@
+const conversionFactors = require("../utils/factors");
+
 function validateConversionParams(req, res, next) {
-  const { fromUnit, toUnit, value } = req.query;
+  const { fromUnit, toUnit, value } = req.body;
+
+  const parsedValue = parseFloat(value);
+  if (isNaN(parsedValue)) {
+    return res.status(400).json({ error: "Valor deve ser um número" });
+  }
 
   if (!fromUnit || !toUnit || !value) {
     return res.status(400).json({ error: "Parâmetros de conversão ausentes" });
   }
 
-  const validUnits = ["meters", "kilometers"];
-  if (!validUnits.includes(fromUnit) || !validUnits.includes(toUnit)) {
+  const validUnits = conversionFactors;
+  if (!validUnits[fromUnit] || !validUnits[toUnit]) {
     return res.status(400).json({ error: "Unidade de medida não suportada" });
-  }
-
-  const parsedValue = parseFloat(value);
-  if (isNaN(parsedValue)) {
-    return res.status(400).json({ error: "Valor deve ser um número" });
   }
 
   req.conversionParams = { fromUnit, toUnit, value: parsedValue };

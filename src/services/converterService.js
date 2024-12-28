@@ -7,17 +7,18 @@ class ConverterService {
     const toUnit = data.toUnit;
     const value = parseFloat(data.value);
 
-    if (isNaN(value)) {
-      return { err: "Número inválido!" };
-    }
+    const temperatureConversions = {
+      grades: {
+        fahrenheit: (val) =>
+          new Temperature().GradesToFahrenheit(val).toFixed(2),
+      },
+      fahrenheit: {
+        grades: (val) => new Temperature().FahrenheitToGrades(val).toFixed(2),
+      },
+    };
 
-    if (
-      !this.conversionFactors[fromUnit] ||
-      !this.conversionFactors[toUnit] ||
-      !fromUnit ||
-      !toUnit
-    ) {
-      throw new Error("Unidade inválida!");
+    if (temperatureConversions[fromUnit]?.[toUnit]) {
+      return temperatureConversions[fromUnit][toUnit](value);
     }
 
     const baseValue = value / this.conversionFactors[fromUnit];
